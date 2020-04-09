@@ -13,7 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is a test
 
-```{r function, echo = T, results = 'hide'}
+```{r function, echo = F, results = 'hide', warning=F}
+
+
 Covidia538 <- function(Ro_uncontrolled = 2.7,
                        Ro_intermediate = 1.4,
                        Ro_lockdown = 0.7,
@@ -366,13 +368,14 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
+```{r pressure, echo=T}
 case1 = Covidia538()
 
 ```
 
 Here is a plot:
-```{r case1, echo=FALSE}
+```{r case1, echo=T, warning=F, message=F}
+
 library(ggplot2)
 library(dplyr)
 library(magrittr)
