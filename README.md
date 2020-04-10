@@ -4,19 +4,26 @@ Nate Silver's Covidia model ported to R
 This repository contains an R function of [the spreadsheet model introduced here.](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
 
 ```R
-case = Covidia538(...)
+case = Covidia538()
 ```
+The function arguments are the named parameters in column B of the worksheets. The default values correspond to Case1.
+There is one additional argument, generations. The default value is 36.
 ```R
 args(Covidia538)
-```
 
-```R
-case$params
+function (Ro_uncontrolled = 2.7, Ro_intermediate = 1.4, Ro_lockdown = 0.7, 
+    Cluster_value = "Yes, slightly", Begin_intermediate = 11, 
+    Begin_lockdown = 15, Pct_asy = 0.3, Pct_mild = 0.6, Zero_date = "01/01/2020", 
+    Serial = 5, Population = 1e+07, Initial_cases = 1, Faux_severe = 0.001, 
+    Faux_mild = 0.025, Desire_severe = 1, Desire_mild = 0.5, 
+    Desire_asy = 0.02, Initial_tests = 1000, Ramp_period = 3, 
+    Test_gowth_rate = 0.5, Tests_max = 1e+07, Rationed_tests = 0.75, 
+    False_negative = 0.2, False_positive = 0.005, Delay = 2, 
+    generations = 36)
 ```
+The function returns a list with two items. `case$params` shows the list of arguments and values.
+`case$output` is a data frame containing the model output. The column names are similar to those in the original spreadsheet.
 
-```R
-case$output
-```
 ```R
 library(reshape2)
 library(ggplot2)
