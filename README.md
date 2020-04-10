@@ -7,7 +7,7 @@ This repository contains an R function of [Nate Silver's Covidia model.](https:/
 case1 = Covidia538()
 ```
 The function arguments are the named parameters in column B of the worksheets. The default values correspond to Scenario 1.
-There is one additional argument, generations. The default value is 36.
+There is one additional argument, generations, with a default value is 36 (the last generation modeled in the scenarios).
 ```R
 args(Covidia538)
 
@@ -43,7 +43,7 @@ The function returns a list with two items. `case$params` shows the list of argu
 [43] "Reported_new_positives"    "Nominal_R"                 "Share_positive" 
 ````
 
-The first few columns of output:
+The first few columns of `case$output`:
 
 | Date | Actual_R | New_Infections | Cumulative_Infections | New_detected_cases |
 |---|----|----|----|----|
@@ -59,6 +59,10 @@ The first few columns of output:
 | 2020-02-15 | 2.6915045 | 8428 | 13392 | 92 |	
     
 ## The scenarios described in the article   
+
+
+## Scenario 1: Robust test growth
+
 ```R
 library(reshape2)
 library(ggplot2)
@@ -73,17 +77,19 @@ c1 <- scenario1$output %>%
   mutate(value= replace(value, value == 0, NA) )
 
 plotit <- function(x) {
-x[x$variable %in% c("New_detected_cases","New_Infections"),] %>%
-  ggplot() + 
-    geom_line(aes(x=Date,y=value, group=variable, color=variable)) +
+  x[x$variable %in% c("New_detected_cases","New_Infections"),] %>%
+    ggplot() + 
+    geom_line(aes(x=Date,y=value, group=variable, color=variable), size=1.5) +
     scale_y_continuous(trans='log10', labels=comma) +
+    xlab("") + ylab("") + theme(legend.title = element_blank()) +
     switch_colors
 }
 
 plotit(c1)
 ```
-## Scenario 1: Robust test growth
-![Case 1 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case1.png)
+![](scenario1.png)
+
+## Scenario 2: Sudden one-time increase in testing
 
 ```R
 scenario2 = Covidia538(Initial_tests=100, Ramp_period=6, Test_gowth_rate=2, Tests_max=100000)
@@ -93,8 +99,9 @@ scenario2$output %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
-## Scenario 2: Sudden one-time increase in testing
-![Case 2 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case2.png)
+![](scenario2.png)
+
+## Scenario 3: High test floor, low test ceiling
 
 ```R
 scenario3 = Covidia538(Initial_tests=10000, Ramp_period=2, Test_gowth_rate=0.03, Tests_max=20000, Rationed_tests = 1)
@@ -104,8 +111,9 @@ scenario3$output %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
-## Scenario 3: High test floor, low test ceiling
-![Case 3 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case3.png)
+![](scenario3.png)
+
+## Scenario 4: A testing decrease
 
 ```R
 scenario4 = Covidia538(Begin_lockdown=19, Initial_tests=10000, Ramp_period=10,T est_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
@@ -115,5 +123,4 @@ scenario4$output %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
-## Scenario 4: A testing decrease
-![Case 4 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case4.png)
+![](scenario4.png)
