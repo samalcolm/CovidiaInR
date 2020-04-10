@@ -28,11 +28,15 @@ c1 <- case1$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) )
 
-c1[c1$variable %in% c("New_detected_cases","New_Infections"),] %>%
+plotit <- function(x) {
+x[x$variable %in% c("New_detected_cases","New_Infections"),] %>%
   ggplot() + 
     geom_line(aes(x=Date,y=value, group=variable, color=variable)) +
     scale_y_continuous(trans='log10', labels=comma) +
     switch_colors
+}
+
+plotit(c1)
 ```
 ## Case 1: actual cases vs detected cases
 ![Case 1 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case1.png "Logo Title Text 1")
@@ -40,13 +44,31 @@ c1[c1$variable %in% c("New_detected_cases","New_Infections"),] %>%
 ```R
 case2 = Covidia538(Initial_tests=100, Ramp_period=6, Test_gowth_rate=2, Tests_max=100000)
 
-c2 <- case2$output %>%
+case2$output %>%
   melt(id="Date") %>%
-  mutate(value= replace(value, value == 0, NA) )
-
-c2[c2$variable %in% c("New_detected_cases","New_Infections"),] %>%
-  ggplot() + 
-    geom_line(aes(x=Date,y=value, group=variable, color=variable)) +
-    scale_y_continuous(trans='log10', labels=comma) +
-  switch_colors
+  mutate(value= replace(value, value == 0, NA) ) %>%
+  plotit()
 ```
+## Case 2: actual cases vs detected cases
+![Case 2 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case2.png "Logo Title Text 1")
+
+```R
+case3 = Covidia538(Initial_tests=10000,Ramp_period=2,Test_gowth_rate=0.03, Tests_max=20000, Rationed_tests = 1)
+
+case3$output %>%
+  melt(id="Date") %>%
+  mutate(value= replace(value, value == 0, NA) ) %>%
+  plotit()
+```
+## Case 3: actual cases vs detected cases
+![Case 3 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case3.png "Logo Title Text 1")
+
+```R
+case4 = Covidia538(Begin_lockdown=19, Initial_tests=10000,Ramp_period=10,Test_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
+case4$output %>%
+  melt(id="Date") %>%
+  mutate(value= replace(value, value == 0, NA) ) %>%
+  plotit()
+```
+## Case 4: actual cases vs detected cases
+![Case 4 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case4.png "Logo Title Text 1")
