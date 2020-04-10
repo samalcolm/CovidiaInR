@@ -24,8 +24,7 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
                        False_positive = 0.005,
                        Delay = 2,
                        generations = 36) {
-  # change string to Date type
-
+  
   Cluster = c(
     "No"	= 0,
     "Yes, slightly" =	0.5,
@@ -106,7 +105,9 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
   if (ARG_ERROR_FLAG)
     stop("Errors in arguments listed above")
   
+  # change Zero_date string to Date type
   Zero_date = as.Date(Zero_date, format = "%m/%d/%Y")
+  # since we have a Generation 0
   gens = generations + 1
   
   Date = rep(0, gens)
