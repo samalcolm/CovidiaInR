@@ -53,7 +53,7 @@ case2$output %>%
 ![Case 2 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case2.png "Logo Title Text 1")
 
 ```R
-case3 = Covidia538(Initial_tests=10000,Ramp_period=2,Test_gowth_rate=0.03, Tests_max=20000, Rationed_tests = 1)
+case3 = Covidia538(Initial_tests=10000, Ramp_period=2, Test_gowth_rate=0.03, Tests_max=20000, Rationed_tests = 1)
 
 case3$output %>%
   melt(id="Date") %>%
@@ -64,7 +64,7 @@ case3$output %>%
 ![Case 3 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case3.png "Logo Title Text 1")
 
 ```R
-case4 = Covidia538(Begin_lockdown=19, Initial_tests=10000,Ramp_period=10,Test_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
+case4 = Covidia538(Begin_lockdown=19, Initial_tests=10000, Ramp_period=10,T est_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
 case4$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
