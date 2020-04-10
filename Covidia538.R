@@ -338,3 +338,23 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
     )
   )
 }
+
+# Susceptible/Infected compartment for single generation. This function can be used if
+# model is to account for interegional movement. Also for testing alternate infection dynamics.
+# One could also add Removals.
+singleCompartment <- function(New_Infections, Cumulative_Infections, Susceptible, Target_Ro, Cluster, Population) {
+  New_Infections =
+    round(Susceptible *
+            (1 -
+               (1 -
+                  (
+                    (
+                      Target_Ro *
+                        (1 - Cumulative_Infections / Population) ^ Cluster
+                    ) / Population
+                  )) ^ New_Infections))
+  
+  Cumulative_Infections = Cumulative_Infections + New_Infections
+  Susceptible = Population - Cumulative_Infections
+  output = list(New_Infections=New_Infections, Cumulative_Infections=Cumulative_Infections, Susceptible=Susceptible)
+}
