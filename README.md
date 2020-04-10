@@ -58,6 +58,7 @@ The first few columns of output:
 | 2020-02-10 | 2.6969600 | 3125 | 4964 | 38 |
 | 2020-02-15 | 2.6915045 | 8428 | 13392 | 92 |	
     
+## The scenarios described in the article   
 ```R
 library(reshape2)
 library(ggplot2)
