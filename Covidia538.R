@@ -182,22 +182,13 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
   for (i in c(1:gens)) {
     Date[i] = Zero_date + Serial * (i - 1)
     
-    if (i > 1) {
-      New_Infections[i] =
-        round(Susceptible[i - 1] *
-                (1 -
-                   (1 -
-                      (
-                        (
-                          Target_Ro[i - 1] *
-                            (1 - Cumulative_Infections[i - 1] / Population) ^ Cluster[Cluster_value]
-                        ) / Population
-                      )) ^ New_Infections[i - 1]))
+    if (i > 1) { 
+      sir = singleCompartment(New_Infections[i-1], Cumulative_Infections[i-1], Susceptible[i-1], Target_Ro[i-1], Cluster[Cluster_value], Population)
+      New_Infections[i] = sir$New_Infections
+      Cumulative_Infections[i] = sir$Cumulative_Infections
+      Susceptible[i] = sir$Susceptible
     }
-    if (i > 1)
-      Cumulative_Infections[i] = Cumulative_Infections[i - 1] + New_Infections[i]
-    Susceptible[i] = Population - Cumulative_Infections[i]
-
+      
     Actual_severe[i] = round(New_Infections[i] * (1 - Pct_asy - Pct_mild))
     Actual_mild[i]   = round(New_Infections[i] * Pct_mild)
     Actual_asy[i]    = New_Infections[i] - Actual_severe[i] - Actual_mild[i]
