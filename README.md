@@ -1,12 +1,12 @@
 # CovidiaInR
-Nate Silver's Covidia model ported to R
 
-This repository contains an R function of [the spreadsheet model introduced here.](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
+
+This repository contains an R function of [Nate Silver's Covidia model.](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
 
 ```R
-case = Covidia538()
+case1 = Covidia538()
 ```
-The function arguments are the named parameters in column B of the worksheets. The default values correspond to Case1.
+The function arguments are the named parameters in column B of the worksheets. The default values correspond to Scenario 1.
 There is one additional argument, generations. The default value is 36.
 ```R
 args(Covidia538)
@@ -24,6 +24,18 @@ function (Ro_uncontrolled = 2.7, Ro_intermediate = 1.4, Ro_lockdown = 0.7,
 The function returns a list with two items. `case$params` shows the list of arguments and values.
 `case$output` is a data frame containing the model output. The column names are similar to those in the original spreadsheet.
 
+| Date | Actual_R | New_Infections | Cumulative_Infections | New_detected_cases |
+| 2020-01-01 | 3.0000000 | 1 | 1 | 0 |
+| 2020-01-06 | 2.6666667 | 3 | 4 | 0 |
+| 2020-01-11 | 2.7500000 | 8 | 12 | 0 |
+| 2020-01-16 | 2.6818182 | 22 | 34 | 5 |
+| 2020-01-21 | 2.6949153 | 59 | 93 | 5 |
+| 2020-01-26 | 2.6981132 | 159 | 252 | 8 |	
+| 2020-01-31 | 2.6993007 | 429 | 681 | 13 |
+| 2020-02-05 | 2.6986183 | 1158 | 1839 | 21 |
+| 2020-02-10 | 2.6969600 | 3125 | 4964 | 38 |
+| 2020-02-15 | 2.6915045 | 8428 | 13392 | 92 |	
+    
 ```R
 library(reshape2)
 library(ggplot2)
@@ -31,7 +43,9 @@ library(dplyr)
 library(scales)
 switch_colors = scale_color_manual(values=c("#00BFC4", "#F8766D"))
 
-c1 <- case1$output %>%
+scenario1 = Covidia538()
+
+c1 <- scenario1$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) )
 
@@ -45,37 +59,37 @@ x[x$variable %in% c("New_detected_cases","New_Infections"),] %>%
 
 plotit(c1)
 ```
-## Case 1: actual cases vs detected cases
-![Case 1 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case1.png "Logo Title Text 1")
+## Scenario 1: Robust test growth
+![Case 1 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case1.png)
 
 ```R
-case2 = Covidia538(Initial_tests=100, Ramp_period=6, Test_gowth_rate=2, Tests_max=100000)
+scenario2 = Covidia538(Initial_tests=100, Ramp_period=6, Test_gowth_rate=2, Tests_max=100000)
 
-case2$output %>%
+scenario2$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
-## Case 2: actual cases vs detected cases
-![Case 2 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case2.png "Logo Title Text 1")
+## Scenario 2: Sudden one-time increase in testing
+![Case 2 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case2.png)
 
 ```R
-case3 = Covidia538(Initial_tests=10000, Ramp_period=2, Test_gowth_rate=0.03, Tests_max=20000, Rationed_tests = 1)
+scenario3 = Covidia538(Initial_tests=10000, Ramp_period=2, Test_gowth_rate=0.03, Tests_max=20000, Rationed_tests = 1)
 
-case3$output %>%
+scenario3$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
-## Case 3: actual cases vs detected cases
-![Case 3 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case3.png "Logo Title Text 1")
+## Scenario 3: High test floor, low test ceiling
+![Case 3 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case3.png)
 
 ```R
-case4 = Covidia538(Begin_lockdown=19, Initial_tests=10000, Ramp_period=10,T est_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
-case4$output %>%
+scenario4 = Covidia538(Begin_lockdown=19, Initial_tests=10000, Ramp_period=10,T est_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
+scenario4$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
-## Case 4: actual cases vs detected cases
-![Case 4 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case4.png "Logo Title Text 1")
+## Scenario 4: A testing decrease
+![Case 4 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case4.png)
