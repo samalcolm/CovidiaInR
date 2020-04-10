@@ -31,4 +31,5 @@ ggplot(c1[c1$variable %in% c("New_detected_cases","New_Infections"),]) +
   scale_y_continuous(trans='log10', labels=comma) +
   switch_colors
 ```
+##Case 1: actual cases vs detected cases
 ![Case 1 actual cases vs detected cases](https://github.com/samalcolm/CovidiaInR/blob/master/case1.png "Logo Title Text 1")
