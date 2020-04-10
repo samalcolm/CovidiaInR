@@ -24,7 +24,29 @@ function (Ro_uncontrolled = 2.7, Ro_intermediate = 1.4, Ro_lockdown = 0.7,
 The function returns a list with two items. `case$params` shows the list of arguments and values.
 `case$output` is a data frame containing the model output. The column names are similar to those in the original spreadsheet.
 
+```R
+> names(case$output)
+ [1] "Date"                      "Actual_R"                  "New_Infections"           
+ [4] "Cumulative_Infections"     "New_detected_cases"        "Cumulative_detected_cases"
+ [7] "Detection_rate"            "New_tests_reported"        "New_share_positive"       
+[10] "Target_Ro"                 "Susceptible"               "Actual_severe"            
+[13] "Actual_mild"               "Actual_asy"                "Pop_severe"               
+[16] "Pop_mild"                  "Pop_asy"                   "Desiring_tests_severe"    
+[19] "Desiring_tests_mild"       "Desiring_tests_asy"        "Tests_available"          
+[22] "Rationed_tests_available"  "On_demand_tests"           "Rationed_tests_severe"    
+[25] "Rationed_tests_mild"       "Rationed_tests_asy"        "Unmet_demand_tests_severe"
+[28] "Unmet_demand_tests_mild"   "Unmet_demand_tests_asy"    "Unmet_demand_total"       
+[31] "On_demand_tests_severe"    "On_demand_tests_mild"      "On_demand_tests_asy"      
+[34] "Tests_conducted_severe"    "Tests_conducted_mild"      "Tests_conducted_asy"      
+[37] "Share_positive_severe"     "Share_positive_mild"       "Share_positive_asy"       
+[40] "Positive_tests_severe"     "Positive_tests_mild"       "Positive_tests_asy"       
+[43] "Reported_new_positives"    "Nominal_R"                 "Share_positive" 
+````
+
+The first few columns of output:
+
 | Date | Actual_R | New_Infections | Cumulative_Infections | New_detected_cases |
+|---|----|----|----|----|
 | 2020-01-01 | 3.0000000 | 1 | 1 | 0 |
 | 2020-01-06 | 2.6666667 | 3 | 4 | 0 |
 | 2020-01-11 | 2.7500000 | 8 | 12 | 0 |
@@ -86,6 +108,7 @@ scenario3$output %>%
 
 ```R
 scenario4 = Covidia538(Begin_lockdown=19, Initial_tests=10000, Ramp_period=10,T est_gowth_rate=-0.2, Tests_max=10000, Rationed_tests = 1)
+
 scenario4$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
