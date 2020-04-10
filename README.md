@@ -18,3 +18,4 @@ case$params
 case$output
 ```
 
+![alt text](https://github.com/samalcolm/CovidiaInR/case1.png "Logo Title Text 1")
