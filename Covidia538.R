@@ -23,8 +23,7 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
                        False_negative = 0.2,
                        False_positive = 0.005,
                        Delay = 2,
-                       generations = 36,
-                       mortality = 0) {
+                       generations = 36) {
   # change string to Date type
 
   Cluster = c(
