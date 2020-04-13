@@ -134,7 +134,7 @@ scenario4$output %>%
 
 
 ## A curve-flattening example
-Here's a simple example to show how the function can be meployed to create and compare multiple scenarios.
+Here's a simple example to show how the function can be employed to create and compare multiple scenarios.
 
 The sooner measures to reduce Ro are implemented in this fictitious population, 
 the maximum number of severe cases seen in the population is reduced. 
