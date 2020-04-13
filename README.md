@@ -8,7 +8,7 @@ case = Covidia538()
 ```
 The function arguments are the named parameters in column B of the original worksheets. The default values correspond to 
 Scenario 1.
-There is one additional argument, generations, with a default value is 36 (the last generation modeled in the scenarios).
+There is one additional argument, generations, with a default value of 36 (the last generation modeled in the original scenarios).
 
 ```R
 args(Covidia538)
