@@ -25,6 +25,8 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
                        Delay = 2,
                        generations = 36) {
   
+  # Source: https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/
+  #         https://fivethirtyeight.com/wp-content/uploads/2020/04/covidia_1.05_updated.xlsx
   Cluster = c(
     "No" = 0,
     "Yes, slightly" = 0.5,
