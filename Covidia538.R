@@ -26,15 +26,15 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
                        generations = 36) {
   
   Cluster = c(
-    "No"	= 0,
+    "No" = 0,
     "Yes, slightly" =	0.5,
     "Yes, moderately" =	1,
-    "Yes, substantailly"	= 2
+    "Yes, substantailly" = 2
   )
   Version = 1.05
   
   # saves list of parameters before any other values enter the environment
-  params =  as.list(environment())
+  params = as.list(environment())
   
   # put in some error checking
   ARG_ERROR_FLAG = FALSE
@@ -112,7 +112,7 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
   
   Date = rep(0, gens)
   Actual_R = rep(0, gens)
-  Doubling_time = rep(0, gens)
+  Doubling_time = rep(0, gens) # not currently implemented
   New_Infections = rep(0, gens)
   Cumulative_Infections = rep(0, gens)
   Pop_severe = rep(0, gens)
