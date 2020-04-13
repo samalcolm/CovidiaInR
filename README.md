@@ -154,4 +154,4 @@ data.frame("x"=start, "plotval"= aa$max) %>%
     xlab("Generation Begin Social Distancing") + ylab("Severe cases at peak") 
 ```
 
-![](scenario4.png)
+![](flat.png)
