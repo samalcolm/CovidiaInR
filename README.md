@@ -134,7 +134,8 @@ scenario4$output %>%
 ## A curve-flattening example
 Here's a simple example to show how the function can be meployed to create and compare multiple scenarios.
 
-The sooner measures to reduce Ro are implemented, the maximum number of severe cases seen in the population is reduced. 
+The sooner measures to reduce Ro are implemented in this fictitious population, 
+the maximum number of severe cases seen in the population is reduced. 
 This plot shows the maximum number of severe cases in any generation seen over the entire time frame for the
 generation of reduction measures begin.
 
