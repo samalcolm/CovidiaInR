@@ -1,7 +1,7 @@
 # CovidiaInR
 
 
-This repository contains an R function of [Nate Silver's Covidia model.](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
+This repository contains an R function of [Nate Silver's Covidia model](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/) detailed on [FiveThirtyEight.com](FiveThirtyEight.com).
 
 ```R
 case1 = Covidia538()
@@ -21,7 +21,7 @@ function (Ro_uncontrolled = 2.7, Ro_intermediate = 1.4, Ro_lockdown = 0.7,
     False_negative = 0.2, False_positive = 0.005, Delay = 2, 
     generations = 36)
 ```
-The function returns a list with two items. `case$params` shows the list of arguments and values.
+The function returns a list with two items. `case$params` shows the list of arguments and their values.
 `case$output` is a data frame containing the model output. The column names are similar to those in the original spreadsheet.
 
 ```R
@@ -68,6 +68,7 @@ library(reshape2)
 library(ggplot2)
 library(dplyr)
 library(scales)
+# My column order is different, it seems.
 switch_colors = scale_color_manual(values=c("#00BFC4", "#F8766D"))
 
 scenario1 = Covidia538()
@@ -77,7 +78,7 @@ c1 <- scenario1$output %>%
   mutate(value= replace(value, value == 0, NA) )
 
 plotit <- function(x) {
-  x[x$variable %in% c("New_detected_cases","New_Infections"),] %>%
+  x[x$variable %in% c("New_Infections","New_detected_cases"),] %>%
     ggplot() + 
     geom_line(aes(x=Date,y=value, group=variable, color=variable), size=1.5) +
     scale_y_continuous(trans='log10', labels=comma) +
