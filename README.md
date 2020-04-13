@@ -4,7 +4,7 @@
 This repository contains an R function of [Nate Silver's Covidia model](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/) detailed on [FiveThirtyEight.com](FiveThirtyEight.com).
 
 ```R
-case1 = Covidia538()
+case = Covidia538()
 ```
 The function arguments are the named parameters in column B of the original worksheets. The default values correspond to 
 Scenario 1.
