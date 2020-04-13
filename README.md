@@ -6,8 +6,10 @@ This repository contains an R function of [Nate Silver's Covidia model](https://
 ```R
 case1 = Covidia538()
 ```
-The function arguments are the named parameters in column B of the worksheets. The default values correspond to Scenario 1.
+The function arguments are the named parameters in column B of the original worksheets. The default values correspond to 
+Scenario 1.
 There is one additional argument, generations, with a default value is 36 (the last generation modeled in the scenarios).
+
 ```R
 args(Covidia538)
 
