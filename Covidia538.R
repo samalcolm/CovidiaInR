@@ -88,10 +88,6 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
     print("Rationed_tests must be between 0 and 1")
     ARG_ERROR_FLAG = TRUE
   }
-  if (mortality > 1 | mortality < 0) {
-    print("mortality must be between 0 and 1")
-    ARG_ERROR_FLAG = TRUE
-  }
   if (!(Cluster_value %in% names(Cluster))) {
     print(paste(
       "Cluster_value must be between one of",
@@ -185,7 +181,12 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
     Date[i] = Zero_date + Serial * (i - 1)
     
     if (i > 1) { 
-      sir = singleCompartment(New_Infections[i-1], Cumulative_Infections[i-1], Susceptible[i-1], Target_Ro[i-1], Cluster[Cluster_value], Population)
+      sir = singleCompartment(New_Infections[i-1], 
+                              Cumulative_Infections[i-1], 
+                              Susceptible[i-1], 
+                              Target_Ro[i-1], 
+                              Cluster[Cluster_value], 
+                              Population)
       New_Infections[i] = sir$New_Infections
       Cumulative_Infections[i] = sir$Cumulative_Infections
       Susceptible[i] = sir$Susceptible
