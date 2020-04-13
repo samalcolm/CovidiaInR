@@ -27,8 +27,8 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
   
   Cluster = c(
     "No" = 0,
-    "Yes, slightly" =	0.5,
-    "Yes, moderately" =	1,
+    "Yes, slightly" = 0.5,
+    "Yes, moderately" = 1,
     "Yes, substantailly" = 2
   )
   Version = 1.05
