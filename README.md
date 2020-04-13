@@ -1,7 +1,7 @@
 # CovidiaInR
 
 
-This repository contains an R function of [Nate Silver's Covidia model.](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/)
+This repository contains an R function of [Nate Silver's Covidia model](https://fivethirtyeight.com/features/coronavirus-case-counts-are-meaningless/) detailed on [FiveThirtyEight.com](FiveThirtyEight.com).
 
 ```R
 case1 = Covidia538()
@@ -21,7 +21,7 @@ function (Ro_uncontrolled = 2.7, Ro_intermediate = 1.4, Ro_lockdown = 0.7,
     False_negative = 0.2, False_positive = 0.005, Delay = 2, 
     generations = 36)
 ```
-The function returns a list with two items. `case$params` shows the list of arguments and values.
+The function returns a list with two items. `case$params` shows the list of arguments and their values.
 `case$output` is a data frame containing the model output. The column names are similar to those in the original spreadsheet.
 
 ```R
@@ -60,6 +60,10 @@ The first few columns of `case$output`:
     
 ## The scenarios described in the article   
 
+The details of the scenarios are described in the original post. The arguments for the different scenarios are expressed
+as differences from a "base case" -  in this case the first scenario. Of course, the base case (default) could be specified
+differently, for example as a "no infection" scenario, but this would complicate the use of the function by requiring more
+parameters to specified in each infection scenario.
 
 ## Scenario 1: Robust test growth
 
@@ -68,6 +72,7 @@ library(reshape2)
 library(ggplot2)
 library(dplyr)
 library(scales)
+# My column order is different, it seems.
 switch_colors = scale_color_manual(values=c("#00BFC4", "#F8766D"))
 
 scenario1 = Covidia538()
@@ -77,7 +82,7 @@ c1 <- scenario1$output %>%
   mutate(value= replace(value, value == 0, NA) )
 
 plotit <- function(x) {
-  x[x$variable %in% c("New_detected_cases","New_Infections"),] %>%
+  x[x$variable %in% c("New_Infections","New_detected_cases"),] %>%
     ggplot() + 
     geom_line(aes(x=Date,y=value, group=variable, color=variable), size=1.5) +
     scale_y_continuous(trans='log10', labels=comma) +
@@ -123,4 +128,30 @@ scenario4$output %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
   plotit()
 ```
+![](scenario4.png)
+
+
+## A curve-flattening example
+Here's a simple example to show how the function can be meployed to create and compare multiple scenarios.
+
+The sooner measures to reduce Ro are implemented, the maximum number of severe cases seen in the population is reduced. 
+This plot shows the maximum number of severe cases in any generation seen over the entire time frame for the
+generation of reduction measures begin.
+
+```R
+start = c(6:16)
+dd = sapply(start, function(x) Covidia538(Begin_intermediate = x, Begin_lockdown = x +4)$output$Actual_severe)
+ddm = cbind("i"=as.factor(c(0:36)),"col"= "severe", data.frame(dd) )
+aa = ddm %>% rbind(ddm) %>%
+  melt() %>% 
+  group_by(col,variable) %>% 
+  summarize(max=max(value))
+  
+data.frame("x"=start, "plotval"= aa$max) %>%
+  ggplot() + 
+    geom_line(aes(x=x,y=plotval), group=1, size=1.5, color="orange") +
+    scale_y_continuous(trans='log10', labels=comma) +
+    xlab("Generation Begin Social Distancing") + ylab("Severe cases at peak") 
+```
+
 ![](scenario4.png)
