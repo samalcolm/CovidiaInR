@@ -83,8 +83,8 @@ c1 <- scenario1$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) )
 
-plotit <- function(x) {
-  x[x$variable %in% c("New_Infections","New_detected_cases"),] %>%
+plotit <- function(data, xcol, ycol) {
+  data[data$variable %in% c(),] %>%
     ggplot() + 
     geom_line(aes(x=Date,y=value, group=variable, color=variable), size=1.5) +
     scale_y_continuous(trans='log10', labels=comma) +
@@ -92,7 +92,7 @@ plotit <- function(x) {
     switch_colors
 }
 
-plotit(c1)
+plotit(c1,"New_Infections","New_detected_cases")
 ```
 ![](scenario1.png)
 
@@ -104,7 +104,7 @@ scenario2 = Covidia538(Initial_tests=100, Ramp_period=6, Test_gowth_rate=2, Test
 scenario2$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
-  plotit()
+  plotit("New_Infections","New_detected_cases")
 ```
 ![](scenario2.png)
 
@@ -116,7 +116,7 @@ scenario3 = Covidia538(Initial_tests=10000, Ramp_period=2, Test_gowth_rate=0.03,
 scenario3$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
-  plotit()
+  plotit("New_Infections","New_detected_cases")
 ```
 ![](scenario3.png)
 
@@ -128,7 +128,7 @@ scenario4 = Covidia538(Begin_lockdown=19, Initial_tests=10000, Ramp_period=10,T 
 scenario4$output %>%
   melt(id="Date") %>%
   mutate(value= replace(value, value == 0, NA) ) %>%
-  plotit()
+  plotit("New_Infections","New_detected_cases")
 ```
 ![](scenario4.png)
 
