@@ -152,7 +152,7 @@ data.frame("x"=start, "plotval"= aa$max) %>%
   ggplot() + 
     geom_line(aes(x=x,y=plotval), group=1, size=1.5, color="orange") +
     scale_y_continuous(trans='log10', labels=comma) +
-    xlab("Generation Begin Social Distancing") + ylab("Severe cases at peak") 
+    xlab("Generation that reduction measures begin") + ylab("Severe cases at peak") 
 ```
 
 ![](flat.png)
