@@ -70,11 +70,12 @@ parameters to specified in each infection scenario.
 ## Scenario 1: Robust test growth
 
 ```R
+# required packages
 library(reshape2)
 library(ggplot2)
 library(dplyr)
 library(scales)
-# My column order is different, it seems.
+# My column order is different, it seems. Switch default colors to match original
 switch_colors = scale_color_manual(values=c("#00BFC4", "#F8766D"))
 
 scenario1 = Covidia538()
@@ -143,7 +144,7 @@ generation of reduction measures begin.
 
 ```R
 start = c(6:16)
-dd = sapply(start, function(x) Covidia538(Begin_intermediate = x, Begin_lockdown = x +4)$output$Actual_severe)
+dd = sapply(start, function(x) Covidia538(Begin_intermediate = x, Begin_lockdown = x + 4)$output$Actual_severe)
 ddm = cbind("i"=as.factor(c(0:36)),"col"= "severe", data.frame(dd) )
 aa = ddm %>% rbind(ddm) %>%
   melt() %>% 
