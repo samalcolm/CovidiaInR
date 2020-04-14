@@ -38,7 +38,7 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
   # saves list of parameters before any other values enter the environment
   params = as.list(environment())
   
-  # put in some error checking
+  # put in some (but not nearly enough) error checking
   ARG_ERROR_FLAG = FALSE
   if (Ro_uncontrolled < 0 | Ro_intermediate < 0 | Ro_lockdown < 0) {
     print("Ro_ values must not be negative")
@@ -342,10 +342,10 @@ Covidia538 <- function(Ro_uncontrolled = 2.7,
   )
 }
 
-# Susceptible/Infected compartment for single generation. This function is useful for a
-# model that accounts for interegional movement or other fatures that change over time.
-# Also for comparing alternate infection dynamic equations.
-# One could also add Removals (deaths and individuals no longer transmitters).
+# Susceptible/Infected compartment for single generation. The singleCompartment function is useful for use in a
+# multi compartment model that accounts for interegional movement or other features that change over time.
+# Or for comparing alternate infection dynamic equations.
+# One could also add Removals (deaths and individuals no longer transmitting the infection).
 singleCompartment <- function(New_Infections, Cumulative_Infections, Susceptible, Target_Ro, Cluster, Population) {
   New_Infections =
     round(Susceptible *
